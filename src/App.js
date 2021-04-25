@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react"
+import './style.css';
+
 
 function App() {
+
+  const [state, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'INCREMENT': {
+        return { ...state, count: state.count + 1 }
+      }
+      case 'DECREMENT': {
+        return { ...state, count: state.count - 1 }
+      }
+      default: {
+        return state
+      }
+    }
+  }, {
+    count: 0
+  })
+
+  let { count } = state
+  const add = () => {
+    dispatch({ type: 'INCREMENT' })
+  }
+
+  const subtract = () => {
+
+    dispatch({ type: 'DECREMENT' })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <h2>Counter: The Most Novel Example I Could Come Up With</h2>
+      <div className="counter">
+        <button onClick={subtract}>-</button>
+        <div>{count}</div>
+        <button onClick={add}>+</button>
+      </div>
+    </section>
   );
 }
 
